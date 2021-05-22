@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Car game
+	</title>
+
+	<script>
+		function toggleText()
+		{
+			var x = document.getElementById("toggle");
+			if(x.style.displae ==="none")
+			{
+				x.style.display = "block";
+			}
+			else
+			{
+				x.style.display = "none";
+			}
+		}
+		
+		function myFunction() 
+		{
+			var arr = [];
+			for(var i=0;i<6;i++)
+			{
+				var j=0;
+				var pos = Math.round(Math.random() * (100-1)) +1;
+				while(arr[j]==pos &&j<6)
+				{
+					continue;
+					j++;
+				}
+				arr.push(pos);
+			}
+
+			arr.sort();
+			arr = arr.join(", ");
+			
+		
+			document.getElementById("First").innerHTML = "Game started";
+			document.getElementById("Second").innerHTML = "Petrol pumps generated at "+arr;
+
+
+
+
+			let total_petrol = 50;
+			var moves = [];
+			let curr_move = 1;
+			
+			
+			let curr_pos = 0;
+			let last_pos = 0;
+
+
+			while(total_petrol>0 && curr_pos<100)
+			{
+				curr_pos = Math.round(Math.random()*6+1);
+				
+				
+				fuel_taken = curr_pos/0.5;
+				total_petrol -= fuel_taken;
+				curr_pos += last_pos;
+				for(var i=0;i<6;i++)
+				{
+					if(arr[i]==curr_pos)
+					{
+						total_petrol += 30;
+				
+					}
+				}
+				
+					
+				
+
+				if(total_petrol <=0)
+				{
+					curr = "Move "+ curr_move +" - car at "+ curr_pos+", petrol remaining - " + 0;
+					moves.push(curr);
+					
+
+					curr = "Move "+ curr_move +" - car at "+ curr_pos+", petrol remaining - " + 0 +", game over";
+					moves.push(curr);
+					break;
+				}
+
+
+				curr = "Move "+ curr_move +" - car at "+ curr_pos+", petrol remaining - "+total_petrol;
+				moves.push(curr);
+				curr_move++;
+				last_pos = curr_pos;
+			
+			}
+
+			
+			document.getElementById("moves").innerHTML = moves.join("<br>");
+			
+
+
+		}	
+	</script>
+
+
+	<style>
+	
+			.button {
+			  border-radius: 4px;
+			  background-color: #f4511e;
+			  border: none;
+			  color: #FFFFFF;
+			  text-align: center;
+			  font-size: 28px;
+			  padding: 20px;
+			  width: 200px;
+			  transition: all 0.5s;
+			  cursor: pointer;
+			  margin: 5px;
+			}
+
+			.button span {
+			  cursor: pointer;
+			  display: inline-block;
+			  position: relative;
+			  transition: 0.5s;
+			}
+
+			.button span:after {
+			  content: '\00bb';
+			  position: absolute;
+			  opacity: 0;
+			  top: 0;
+			  right: -20px;
+			  transition: 0.5s;
+			}
+
+			.button:hover span {
+			  padding-right: 25px;
+			}
+
+			.button:hover span:after {
+			  opacity: 1;
+			  right: 0;
+			}
+	</style>
+
+</head>
+<body>
+	<h1>
+		Travelling car game
+	</h1>
+
+	<h2 id="toggle">Click the start button to play</h2>
+	<button  onClick="myFunction(); toggleText()" class="button">
+		<span>Start</span>
+	</button>
+
+	<p id="First"></p>
+	<p id="Second"></p>
+	
+	
+
+	<p id="moves"></p>
+</body>
+</html>
